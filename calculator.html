@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculateur de devis</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+<script src="https://smtpjs.com/v3/smtp.js"></script>
+<style>
+
+.accordion {
+  background-color: #98000b;
+  color: white;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+  transition: 0.4s;
+}
+
+.active, .accordion:hover {
+  background-color:#0066b1 ; 
+}
+
+.panel {
+  padding: 0 18px;
+  display: none;
+  background-color: white;
+  overflow: hidden;
+  margin-bottom: 
+}
+
+.accordion:after {
+  content: '\02795'; /* Unicode character for "plus" sign (+) */
+  font-size: 13px;
+  color: #000;
+  float: right;
+  margin-left: 5px;
+}
+
+.active:after {
+  content: "\2796"; /* Unicode character for "minus" sign (-) */
+}
+ .paneCon img{
+  
+  width: 100px;
+  height: 100px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  
+ 
+}
+
+.paneCon input {
+    width: 50px;
+    margin-top: 5px;
+    border-radius: 4px;
+    border: 2px solid  #002b4b;
+}
+.ajouter {
+  display: inline-block;
+  padding: 7px;
+  font-size: 18px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 4px;
+ 
+}
+
+.upDown {
+  display: inline-block;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 4px;
+}
+
+.paneCon button:active {
+  background-color: #3e8e41;
+}
+
+.paneCon{
+
+  display: inline-block;
+  text-align: center; 
+  margin: 5px 8px;
+  mbox-shadow: 0 0.125rem 0.75rem rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  border: 3px solid  #0066b1;
+ 
+}
+.btn-primary{
+  display: inline-block;
+  padding: 7px;
+  border-radius: 4px;
+}
+.btn-danger{
+  display: inline-block;
+  padding: 7px;
+  border-radius: 4px;
+}
+
+.callout {
+  position: fixed;
+  right: 0px;
+  max-width: 300px;
+}
+
+.callout-header {
+  padding: 8px 8px;
+  background: #555;
+  font-size: 20px;
+  color: white;
+}
+
+.callout-container {
+  padding: 8px;
+  background-color: #ccc;
+  color: black
+}
+
+.closebtn {
+  position: absolute;
+  top: 5px;
+  right: 15px;
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.closebtn:hover {
+  color: lightgrey;
+}
+
+.delet{
+  cursor: pointer;
+  text-align: center;
+  width: 25px;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: red;
+  border: none;
+  border-radius: 4px;
+}
+
+.surface input{
+  border-radius: 4px;
+  width: 90px;
+  border: 3px solid ;
+}
+
+.surface{
+  position: absolute;
+  right:10px;
+  font-weight: bold;
+}
+
+.head h1{
+  text-align: center;
+  color: white;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.container input[type=text], select, textarea {
+  width: 100%;
+  padding: 12px ;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+input[type=tel], select, textarea {
+  width: 100%;
+  padding: 12px ;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+input[type=email], select, textarea {
+  width: 100%;
+  padding: 12px ;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+.container input[type=number], select, textarea {
+  width: 100%;
+  padding: 12px ;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+}
+
+input[type=button] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: right;
+}
+
+input[type=button]:hover {
+  background-color: #45a049;
+}
+
+.container {
+
+   margin: auto;
+   width: 60%;
+  border-radius: 5px;
+  margin-top: 100px;
+  margin-bottom: 100px
+
+}
+
+.col-25 {
+  float: left;
+  width: 25%;
+  margin-top: 6px;
+}
+
+.col-75 {
+  float: left;
+  width: 75%;
+  margin-top: 6px;
+}
+
+.col-20 {
+    float: left;
+  width: 50%;
+ }
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.head p{
+
+  font-family: courier;
+  font-size: 160%;
+  color: white;
+}
+
+.head {
+    background-color: #262626; 
+}
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .col-25, .col-75, input[type=submit] {
+    width: 100%;
+    margin-top: 0;
+  }
+}
+</style>
+</head>
+<body>
+<div class="head">
+<h1>Calculateur de devis en ligne</h1><br>
+<p>Il faut choisir un ou plusieurs objets pour calculer votre devis de déménagement en ligne.
+</p><br>
+</div>
+<div id="notification" class="callout">
+</div>
+<button class="accordion" onclick="getButtonCar(cartons, 'cartons')">Cartons</button>
+<div id="cartons" class="panel">
+</div>
+<button class="accordion" onclick="getButtonSe(sejour,'sejour')">Salle de Séjour</button>
+<div id="sejour" class="panel">
+</div>
+<button class="accordion" onclick="getButtonCui(cuisine,'cuisine')">Cuisine</button>
+<div id="cuisine" class="panel">
+</div>
+<button class="accordion" onclick="getButtonCha(chambre,'chambre')">Chambre</button>
+<div id="chambre" class="panel">
+</div>
+<button class="accordion" onclick="getButtonExt(exterieur,'exterieur')">Extérieur</button>
+<div id="exterieur" class="panel">
+</div>
+<div class="tableSurface">
+<table class="table" id="tableSurface">
+<thead class="thead-dark">
+<tr>
+<th scope="col">Nom</th>
+<th scope="col">Nombre</th>
+<th scope="col">Surface (m3) </th>
+<th scope="col">Action</th>
+</tr>
+</thead>
+</table>
+</div>
+<div class="surface">
+<label for="surface">Surface Totale : </label>
+<input type="number" id="surface" name="surfaceTotal" readonly></input>
+</div>
+<div class="container">
+<form name="myForm" method="post">
+<div class="row">
+<div class="col-75">
+<h2>Contactez nous</h2>
+<br>
+<input type="text" name="name" class="long" placeholder="Votre nom.." />
+<span class="error" id="errorname"></span>
+</div>
+</div>
+<div class="row">
+<div class="col-75">
+<input type="tel" name="telephone" class="long" placeholder="Telephone.." />
+<span class="error" id="errtelephone"></span>
+</div>
+</div>
+<div class="row">
+<div class="col-75">
+<input type="email" name="email" class="long" placeholder="Email.." />
+<span class="error" id="erroremail"></span>
+</div>
+</div>
+<div class="row">
+<div class="col-75">
+<br>
+<h4>Adresse de départ :</h4>
+<input type="text" name="adresseD" class="long" placeholder="Rue de départ.." />
+<span class="error" id="erroradresseD"></span>
+</div>
+</div>
+<div class="row">
+<div class="col-20">
+<input type="number" name="CasepostaleD" class="long" placeholder="Case postale départ.." />
+<span class="error" id="errorPostalD"></span>
+<input type="text" name="VilleD" class="long" placeholder="Ville départ.." />
+<span class="error" id="errorVilleD"></span>
+<input type="text" name="paysD" class="long" placeholder="Pays départ.." />
+<span class="error" id="errorpaysD"></span>
+<select id="ascenseurD" name="ascenseurD">
+<option value="oui">Avec ascenseur</option>
+<option value="non">Sans ascenseur</option>
+</select>
+</div>
+</div>
+<div class="row">
+<div class="col-75">
+<br>
+<h4>Adresse d'arrivée :</h4>
+<input type="text" name="adresseA" class="long" placeholder="Rue d'arrivée.." />
+<span class="error" id="erroradresseA"></span>
+</div>
+</div>
+<div class="row">
+<div class="col-20">
+<input type="number" name="CasepostaleA" class="long" placeholder="Case postale d'arrivée.." />
+<span class="error" id="errorPostalA"></span>
+<input type="text" name="VilleA" class="long" placeholder="Ville d'arrivée.." />
+<span class="error" id="errorVilleA"></span>
+<input type="text" name="paysA" class="long" placeholder="Pays d'arrivée.." />
+<span class="error" id="errorpaysA"></span>
+<select id="ascenseurA" name="ascenseurA">
+<option value="oui">Avec ascenseur</option>
+<option value="non">Sans ascenseur</option>
+</select>
+</div>
+</div>
+<div class="row">
+<div class="col-75">
+<textarea name="message" class="long field-textarea" placeholder="Ecris quelque chose.." style="height:200px"></textarea>
+<span class="error" id="errormsg"></span>
+</div>
+</div>
+<div class="row">
+<input type="button" value="Envoyer Email" onclick="sendEmail()" />
+</div>
+<span class="messageG" id="messageG"></span>
+<div id="error_message"></div>
+</form>
+</div>
+<script>
+    const cartons = new Array (
+            {
+                name: 'Carton - STD',
+                img:'https://image.flaticon.com/icons/svg/2630/2630085.svg',
+                slug: 'Carton-STD',
+                surface:0.10
+            },
+            {
+                name: 'Carton Livre',
+                img:'https://image.flaticon.com/icons/svg/1067/1067555.svg',
+                slug: 'Carton-Livre',
+                surface:0.07
+              
+            }, {
+                name: 'Carton Panderie',
+                img:'https://image.flaticon.com/icons/svg/645/645652.svg',
+                slug: 'Carton-Panderie',
+                surface:1.80
+            },
+
+            {
+                name: 'Carton de Vins',
+                img:'https://image.flaticon.com/icons/svg/645/645652.svg',
+                slug:'Carton-Vins',
+                surface: 0.50
+              
+            }
+        );
+
+        var sejour = new Array (
+            {
+                name: 'Petit Meuble',
+                img:'https://img.icons8.com/ios-glyphs/60/000000/armchair.png',
+                slug: 'Petit-Meuble',
+                surface:0.50
+            },
+            
+            {
+                name: 'Fauteuil',
+                img:'https://img.icons8.com/ios-glyphs/60/000000/armchair.png',
+                slug: 'Fauteuil',
+                surface:0.8
+            },
+            {
+                name: 'Canapé Lit',
+                img:'https://img.icons8.com/ios-glyphs/60/000000/sofa-with-buttons.png',
+                slug: 'Canapé-Lit',
+                surface:2.5
+                
+            },
+            {
+                name: 'Canapé 2 Places',
+                img:'https://www.pngitem.com/pimgs/m/24-246212_vector-furniture-sofa-clip-art-freeuse-sofa-icon.png',
+                slug: 'Canapé-2-Places',
+                surface:2.0
+            },
+            {
+                name: 'Canapé Angle',
+                img :"https://cdn2.iconfinder.com/data/icons/furniture-1-2-1/1024/lshape_sofa6-512.png",
+                slug: 'Canapé-Angle',
+                surface:3.0
+            },
+            {
+                name: 'Etagére',
+                img :"https://cdn.iconscout.com/icon/premium/png-256-thumb/bookshelf-1740518-1481711.png",
+                slug: 'Etagére',
+                surface:0.6
+        
+            },
+            {
+                name: 'Bureau',
+                img :"https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT9ab57t5Kwbbt2pPV8W35iG-QpCQYWvWYQKw&usqp=CAU",
+                slug: 'Bureau',
+                surface:1.50
+            },
+            {
+                name: 'Table Basse',
+                img :"https://img.icons8.com/windows/60/000000/table.png",
+                slug: 'Table-Basse',
+                surface:0.50
+            },
+            {
+                name: 'Ordinateur portable',
+                img :"https://img.icons8.com/windows/60/000000/table.png",
+                slug: 'Ordinateur-portable',
+                surface:0.10
+            },
+            {
+                name: 'Lampe',
+                img :"https://img.icons8.com/ios-filled/60/000000/desk-lamp.png",
+                slug: 'Lampe',
+                surface:0.75
+            },
+            {
+                name: 'Lustres',
+                img :"https://img.icons8.com/ios-filled/60/000000/chandelier.png",
+                slug: 'Lustres',
+                surface:0.25
+            },
+            {
+                name: 'Miroir',
+                img :"https://cdn.icon-icons.com/icons2/390/PNG/512/mirror-mirror_38200.png",
+                slug: 'Miroir',
+                surface:0.20
+            },
+            {
+                name: 'Tapis',
+                img :"https://img.icons8.com/ios-filled/50/000000/carpet.png",
+                slug: 'Tapis',
+                surface:0.25
+            },
+            {
+                name: 'Meuble TV',
+                img :"https://static.thenounproject.com/png/1591484-200.png",
+                slug: 'Meuble-TV',
+                surface:0.70
+            },
+            {
+                name: 'Téle',
+                img :"https://img.icons8.com/ios-glyphs/60/000000/retro-tv.png",
+                slug: 'Téle',
+                surface:0.30
+            },
+            {
+                name: 'Buffet',
+                img :"https://img.icons8.com/ios-glyphs/60/000000/retro-tv.png",
+                slug: 'Buffet',
+                surface:0.30
+            },
+            {
+                name: 'Bibliotheque',
+                img :"https://img.icons8.com/ios-glyphs/60/000000/book-shelf.png",
+                slug: 'Bibliotheque',
+                surface:0.80
+            },
+            {
+                name: 'Piano (Droit)',
+                img :"https://img.icons8.com/ios-filled/60/000000/grand-piano.png",
+                slug: 'Piano-(Droit)',
+                surface:2.30
+               
+            },
+            {
+                name: 'Piano (Grand)',
+                img:'https://i.pinimg.com/originals/fd/aa/6c/fdaa6c8928b14c99ea4eefe7636769f8.png',
+                slug: 'Piano-(Grand)',
+                surface:4.50
+              
+            },
+            {
+                name: 'Piano (électrique)',
+                img:"https://img.icons8.com/ios-glyphs/60/000000/piano.png",
+                slug: 'Piano-(électrique)',
+                surface:1.70
+                
+            },
+        );
+        
+        var cuisine = new Array (
+            {
+                name: 'Table',
+                img: 'https://img.icons8.com/ios-filled/50/000000/table.png',
+                slug: 'Table',
+                surface:1.50
+            },
+            {
+                name: 'Chaise',
+                img: 'https://img.icons8.com/ios-glyphs/50/000000/chair.png',
+                slug: 'Chaise',
+                surface:0.15
+            },
+            {
+                name: 'Cabinet',
+                img: 'https://img.icons8.com/ios/50/000000/cabinet-light.png',
+                slug: 'Cabinet',
+                surface:1.20
+            },
+            {
+                name: 'Placard',
+                img: 'https://image.flaticon.com/icons/svg/1653/1653816.svg',
+                slug: 'Placard',
+                surface:2.00
+            },
+            {
+                name: 'Frigo',
+                img: 'https://img.icons8.com/ios-glyphs/60/000000/fridge.png',
+                slug: 'Frigo',
+                surface:1.50
+               
+            },
+            {
+                name: 'Congélateur',
+                img: 'https://icon-library.com/images/freezer-icon/freezer-icon-2.jpg',
+                slug: 'Congélateur',
+                surface:1.60
+            },
+            {
+                name: 'Lave vaiselle',
+                img: 'https://img.icons8.com/ios-glyphs/60/000000/cooker.png',
+                slug: 'Lave-vaiselle',
+                surface:0.70
+            },
+            {
+                name: 'Cuisinière',
+                img: 'https://img.icons8.com/ios-glyphs/60/000000/cooker.png',
+                slug: 'Cuisinière',
+                surface:2.0
+            },
+            {
+                name: 'Four',
+                img: 'https://img.icons8.com/ios-glyphs/60/000000/microwave.png',
+                slug: 'Four',
+                surface:0.50
+            },
+            {
+                name: 'Four Micro-ondes',
+                img: 'https://img.icons8.com/material-outlined/60/000000/microwave.png',
+                slug: 'Micro-ondes',
+                surface:0.25
+            },
+            {
+                name: 'Séche-linge',
+                img: 'https://img.icons8.com/ios-glyphs/60/000000/tumble-dry.png',
+                slug: 'Séche-linge',
+                surface:0.70
+            },
+            {
+                name: 'Lave-linge',
+                img: 'https://img.icons8.com/ios-glyphs/60/000000/washing-machine.png',
+                slug: 'Lave-linge',
+                surface:0.70
+            },
+        );
+
+        var chambre = new Array (
+            {
+                name: "Lit d'Enfant",
+                img: 'https://image.flaticon.com/icons/svg/2635/2635486.svg',
+                slug: "Lit-Enfant",
+                surface:1.20
+            },
+            {
+                name: 'Lit Superpose',
+                img: 'https://www.flaticon.com/br/premium-icon/icons/svg/2198/2198716.svg',
+                slug: 'Lit-Superpose',
+                surface:2.50
+            },
+            {
+                name: 'Matelas',
+                img: 'https://www.flaticon.com/br/premium-icon/icons/svg/2356/2356943.svg',
+                slug: 'Matelas',
+                surface:0.50
+            },
+            {
+                name: 'Lit double',
+                img: 'https://image.flaticon.com/icons/svg/2863/2863197.svg',
+                slug: 'Lit-double',
+                surface:1.60
+                
+            },
+            {
+                name: 'Double Matelas',
+                img: 'https://image.flaticon.com/icons/svg/2819/2819968.svg',
+                surface:1.0
+            },
+            {
+                name: 'Lit King',
+                img: 'https://image.flaticon.com/icons/svg/2933/2933755.svg',
+                slug: 'Lit-King',
+                surface:2.50
+            },
+            {
+                name: 'Table de Chevet',
+                img: 'https://image.flaticon.com/icons/svg/774/774747.svg',
+                slug: 'Table-de-Chevet',
+                surface:0.20
+            },
+            {
+                name: 'Armoire 2 Portes',
+                img: 'https://image.flaticon.com/icons/svg/2438/2438055.svg',
+                name: 'Armoire-2-Portes',
+                surface:1.50
+            },
+            {
+                name: 'Armoire 3/4 Portes',
+                img: 'https://image.flaticon.com/icons/png/512/896/896480.png',
+                slug:'Armoire-3/4-Portes',
+                surface:2.50
+            },
+            {
+                name: 'Commode',
+                img: 'https://image.flaticon.com/icons/svg/2678/2678324.svg',
+                slug: 'Commode',
+                surface:1.50
+               
+            },
+            {
+                name: 'Chaise de Bureau',
+                img: 'https://image.flaticon.com/icons/svg/2242/2242342.svg',
+                slug: 'Chaise-de-Bureau',
+                surface:1.00
+            },
+        );
+
+        var exterieur = new Array (
+            {
+                name: 'Chaise Jardin',
+                img: 'https://image.flaticon.com/icons/svg/47/47591.svg',
+                slug: 'Chaise-Jardin',
+                surface:0.25
+            },
+            {
+                name: "Table d'Exterieur",
+                img: 'https://www.flaticon.com/br/premium-icon/icons/svg/2648/2648006.svg',
+                slug: "Table-Exterieur",
+                surface:0.90
+            },
+            {
+                name: 'Plantes',
+                img: 'https://www.flaticon.com/br/premium-icon/icons/svg/2493/2493739.svg',
+                slug: 'Plantes',
+                surface:0.50
+            },
+            {
+                name: 'Banc',
+                img: 'https://www.flaticon.com/br/premium-icon/icons/svg/911/911725.svg',
+                slug: 'Banc',
+                surface:0.90
+            },
+            {
+                name: 'Barbecue',
+                img: 'https://image.flaticon.com/icons/svg/3100/3100657.svg',
+                slug: 'Barbecue',
+                surface:1.00
+            },
+            {
+                name: 'vélo',
+                img: 'https://image.flaticon.com/icons/svg/685/685784.svg',
+                slug: 'vélo',
+                surface:0.80
+            },
+            {
+                name: 'Moto',
+                img: 'https://image.flaticon.com/icons/svg/1168/1168041.svg',
+                slug: 'Moto',
+                surface:2.50
+            },
+            {
+                name: "Appareil d'Exercise",
+                img: 'https://image.flaticon.com/icons/svg/1178/1178921.svg',
+                slug: "Appareil-Exercise",
+                surface:2.00
+            },
+            {
+                name: 'Ski/Snowboard',
+                img: 'https://image.flaticon.com/icons/svg/2341/2341458.svg',
+                slug: "Ski/Snowboard",
+                surface:0.30
+            },
+            {
+                name: 'Outils',
+                img: 'https://image.flaticon.com/icons/svg/535/535624.svg',
+                slug: 'Outils',
+                surface:0.05
+            },
+            {
+                name: 'Divers',
+                img: 'https://image.flaticon.com/icons/svg/869/869129.svg',
+                slug: 'Divers',
+                surface:0.30
+            },
+            {
+                name: 'Carton de Vins',
+                img: 'https://www.flaticon.com/br/premium-icon/icons/svg/1171/1171922.svg',
+                slug: 'Carton-de-Vins',
+                surface:0.50
+            },
+        );
+var srfaceTotal = 0;
+var nbrRow = 0;
+var testSejour = 0;
+
+
+
+function up(nbr){
+    
+    let nbr1 = document.getElementById(nbr).value;
+    if(nbr1==0) {
+        document.getElementById(nbr).value = 1;
+    }
+    if(nbr1>0){
+        nbr1++;
+        document.getElementById(nbr).value =nbr1 ;
+    }
+    
+}
+
+function down(nbr){
+    let nbr1 = document.getElementById(nbr).value;
+    if(nbr1==0) {
+        document.getElementById(nbr).value = 0;
+    }
+    if(nbr1>0){
+        nbr1--;
+        document.getElementById(nbr).value =nbr1 ;
+    }
+    
+}
+
+var testEgal = 0;
+function setInformation(nameBnt, surfaceObj,nbr){
+    nbrRow++;
+    let panenot = document.getElementById("notification");
+    let nbr1 = document.getElementById(nbr).value;
+    let surface = Math.round((nbr1*surfaceObj)*100)/100;
+    let tmp1 = nbr1 + 1;
+    let idTd = "addNbr"+(nbrRow);
+    let table = document.getElementById("tableSurface");
+    srfaceTotal += surface;
+     for (let row of table.rows) {
+        if(nameBnt == row.cells[0].innerText)  {
+            let ajouSurface = parseFloat(row.cells[2].innerText);
+            let nbr2 =  parseInt(row.cells[1].innerText);
+            let surfaceT = Math.round((surface+ajouSurface)*100)/100;
+            let newNbr = parseInt(nbr1)+ nbr2
+            row.cells[1].innerHTML = "<th>"+newNbr+"</th>";
+            row.cells[2].innerHTML = "<th>"+surfaceT+"</th>";
+            row.cells[3].innerHTML = "<th><button class="+"delet"+" onclick="+"delet(\""+row.id+"\")"+">x</button></th>";
+             panenot.innerHTML ="<div class="+"callout-header"+">Ajout d'élément</div><span class="+"closebtn"+" onclick="+"myFunction(this)"+">×</span><div class="+"callout-container"+"><p>Vous avez ajouté "+nbr1+" "+nameBnt+" <a href="+"#tableSurface"+">Contenaire</a></p></div>";
+            document.getElementById("surface").value = srfaceTotal.toFixed(2); 
+            testEgal = 1;
+        }
+
+    }
+
+    if(testEgal == 0) {
+        let row = table.insertRow(-1);
+        idRow = "tabRow"+nbrRow;
+        row.id = idRow;
+        let cell1 = row.insertCell(0);
+        let cell2 = row.insertCell(1);
+        let cell3 = row.insertCell(2);
+        let cell4 = row.insertCell(3);
+
+        if(nbr1>0) {
+
+             cell1.innerHTML = "<th>"+nameBnt+"</th>";
+             cell2.innerHTML = "<th>"+nbr1+"</th>";
+             cell3.innerHTML = "<th>"+surface+"</th>";
+             cell4.innerHTML = "<th><button class="+"delet"+" onclick="+"delet(\""+idRow+"\")"+">x</button></th>";
+
+             panenot.innerHTML ="<div class="+"callout-header"+">Ajout d'élément</div><span class="+"closebtn"+" onclick="+"myFunction(this)"+">×</span><div class="+"callout-container"+"><p>Vous avez ajouté "+nbr1+" "+nameBnt+" <a href="+"#tableSurface"+">Contenaire</a></p></div>";
+            document.getElementById("surface").value = srfaceTotal.toFixed(2); 
+        }   
+    }
+    testEgal = 0;
+}
+function myFunction(pane) {
+  
+  if (pane.parentElement.style.display === "none") {
+    pane.parentElement.style.displayy = "block";
+  } else {
+    pane.parentElement.style.display = "none";
+  }
+}
+function delet(nbrRow){
+    let supSurface = 0;
+    let n= 0;
+    let row = document.getElementById(nbrRow);
+    row.parentNode.removeChild(row);
+    let table = document.getElementById("tableSurface");
+    for (let row of table.rows) {
+        if(n>0){
+        supSurface += parseFloat(row.cells[2].innerText);
+        }
+        n++;
+    }
+    srfaceTotal = supSurface;
+    console.log(supSurface);
+    document.getElementById("surface").value  = supSurface.toFixed(2);
+}
+
+function getButtonSe(bntName, id) {
+   let pane = document.getElementById(id);
+   if(testSejour == 0) {
+     for(let i in bntName) {
+        let nameB = bntName[i].name;
+        let tmp1 = i + 1;
+        let idTmp = "S" + tmp1
+        pane.innerHTML += "<div id="+i+" class="+"paneCon"+"><h6>"+nameB+"</h6>"+
+        "<label for="+idTmp+""+"></label> <input type="+"number"+" id="+idTmp+""+" name="+"contite"+"></input><button class="+"upDown"+" onclick="+"up(\""+idTmp+"\")"+">▲</button><button class="+"upDown"+"  onclick="+"down(\""+idTmp+"\")"+">▼</button><br> "+
+         "<img class="+"image"+" src="+bntName[i].img +"></img><br>" +" <button class="+"ajouter"+" onclick="+"setInformation(\""+bntName[i].slug+"\",\""+bntName[i].surface+"\",\""+idTmp+"\")"+">Ajouter</button><br></div>" ; 
+        }
+    }
+testSejour++;
+}
+
+var testCarton = 0;
+function getButtonCar(bntName, id) {
+   let pane = document.getElementById(id);
+   if(testCarton == 0) {
+     for(let i in bntName) {
+        let nameB = bntName[i].name;
+        let tmp1 = i + 1;
+        let idTmp = "C" + tmp1
+        pane.innerHTML += "<div id="+i+" class="+"paneCon"+"><h6>"+nameB+"</h6>"+
+        "<label for="+tmp1+""+"></label> <input type="+"number"+" id="+idTmp+""+" name="+"contite"+"></input><button class="+"upDown"+" onclick="+"up(\""+idTmp+"\")"+">▲</button><button class="+"upDown"+"  onclick="+"down(\""+idTmp+"\")"+">▼</button><br> "+
+         "<img class="+"image"+" src="+bntName[i].img +"></img><br>" +" <button class="+"ajouter"+" onclick="+"setInformation(\""+bntName[i].slug+"\",\""+bntName[i].surface+"\",\""+idTmp+"\")"+">Ajouter</button><br></div>" ; 
+        }
+    }
+testCarton++;
+}
+
+var testCuisine = 0;
+function getButtonCui(bntName, id) {
+  let pane = document.getElementById(id);
+   if(testCuisine == 0) {
+     for(let i in bntName) {
+        let nameB = bntName[i].name;
+        let tmp1 = i + 1;
+        let idTmp = "CU" + tmp1
+        pane.innerHTML += "<div id="+i+" class="+"paneCon"+"><h6>"+nameB+"</h6>"+
+        "<label for="+tmp1+""+"></label> <input type="+"number"+" id="+idTmp+""+" name="+"contite"+"></input><button class="+"upDown"+" onclick="+"up(\""+idTmp+"\")"+">▲</button><button class="+"upDown"+"  onclick="+"down(\""+idTmp+"\")"+">▼</button><br> "+
+         "<img class="+"image"+" src="+bntName[i].img +"></img><br>" +" <button class="+"ajouter"+" onclick="+"setInformation(\""+bntName[i].slug+"\",\""+bntName[i].surface+"\",\""+idTmp+"\")"+">Ajouter</button><br></div>" ; 
+        }
+    }
+testCuisine++;
+}
+
+var testChambre = 0;
+function getButtonCha(bntName, id) {
+  let pane = document.getElementById(id);
+   if(testChambre == 0) {
+     for(let i in bntName) {
+        let nameB = bntName[i].name;
+        let tmp1 = i + 1;
+        let idTmp = "CH" + tmp1
+        pane.innerHTML += "<div id="+i+" class="+"paneCon"+"><h6>"+nameB+"</h6>"+
+        "<label for="+tmp1+""+"></label> <input type="+"number"+" id="+idTmp+""+" name="+"contite"+"></input><button class="+"upDown"+" onclick="+"up(\""+idTmp+"\")"+">▲</button><button class="+"upDown"+"  onclick="+"down(\""+idTmp+"\")"+">▼</button><br> "+
+         "<img class="+"image"+" src="+bntName[i].img +"></img><br>" +" <button class="+"ajouter"+" onclick="+"setInformation(\""+bntName[i].slug+"\",\""+bntName[i].surface+"\",\""+idTmp+"\")"+">Ajouter</button><br></div>" ; 
+        }
+    }
+
+testChambre++;
+}
+
+var testExterieur = 0;
+function getButtonExt(bntName, id) {
+   let pane = document.getElementById(id);
+   if(testExterieur == 0) {
+     for(let i in bntName) {
+        let nameB = bntName[i].name;
+        let tmp1 = i + 1;
+        let idTmp = "E" + tmp1
+        pane.innerHTML += "<div id="+i+" class="+"paneCon"+"><h6>"+nameB+"</h6>"+
+        "<label for="+tmp1+""+"></label> <input type="+"number"+" id="+idTmp+""+" name="+"contite"+"></input><button class="+"upDown"+" onclick="+"up(\""+idTmp+"\")"+">▲</button><button class="+"upDown"+"  onclick="+"down(\""+idTmp+"\")"+">▼</button><br> "+
+         "<img class="+"image"+" src="+bntName[i].img +"></img><br>" +" <button class="+"ajouter"+" onclick="+"setInformation(\""+bntName[i].slug+"\",\""+bntName[i].surface+"\",\""+idTmp+"\")"+">Ajouter</button><br></div>" ; 
+        }
+    }
+testExterieur++;
+}
+
+function logSubmit(event) {
+  log.textContent = `Form Submitted! Time stamp: ${event.timeStamp}`;
+  event.preventDefault();
+}
+
+
+function validateForm()                                    
+{ 
+    var name = document.forms["myForm"]["name"];         
+    var telephone = document.forms["myForm"]["telephone"];          
+    var email = document.forms["myForm"]["email"];    
+    var message = document.forms["myForm"]["message"];  
+    var error_message = document.forms["myForm"]["error_message"];
+    var adresseD = document.forms["myForm"]["adresseD"];
+    var casepostaleD = document.forms["myForm"]["CasepostaleD"];
+    var villeD = document.forms["myForm"]["VilleD"];
+    var paysD = document.forms["myForm"]["paysD"];
+    var ascenseurD = document.forms["myForm"]["ascenseurD"];  
+    var adresseA = document.forms["myForm"]["adresseA"];
+    var casepostaleA = document.forms["myForm"]["CasepostaleA"];
+    var villeA = document.forms["myForm"]["VilleA"];
+    var paysA = document.forms["myForm"]["paysA"];
+    var ascenseurA = document.forms["myForm"]["ascenseurA"];  
+
+    var surface = document.getElementById("surface");
+   
+   
+    
+    return true; 
+  
+        
+}
+
+var html ="";
+function tableHtml(){
+  let nomHtml;
+  let nombreHtml;
+  let surfaceHtml;
+  let table = document.getElementById("tableSurface");
+  let nbr = 0;
+  for(let row of table.rows){
+    nomHtml = row.cells[0].innerText;
+    nombreHtml = row.cells[1].innerText
+    surfaceHtml = row.cells[2].innerText;
+    if(nbr>0)
+         html += `<hr><br>
+                 <p style="color:black">Nom: `+nomHtml+`,   Nombre: `+nombreHtml+`,   surface: `+surfaceHtml+`<p>` ; 
+
+    nbr ++;
+  } 
+   
+}
+
+function sendEmail() { 
+    var name = document.forms["myForm"]["name"];         
+    var telephone = document.forms["myForm"]["telephone"];          
+    var email = document.forms["myForm"]["email"];    
+    var message = document.forms["myForm"]["message"];  
+    var error_message = document.forms["myForm"]["error_message"];
+    var adresseD = document.forms["myForm"]["adresseD"];
+    var casepostaleD = document.forms["myForm"]["CasepostaleD"];
+    var villeD = document.forms["myForm"]["VilleD"];
+    var paysD = document.forms["myForm"]["paysD"];
+    var ascenseurD = document.forms["myForm"]["ascenseurD"];  
+    var adresseA = document.forms["myForm"]["adresseA"];
+    var casepostaleA = document.forms["myForm"]["CasepostaleA"];
+    var villeA = document.forms["myForm"]["VilleA"];
+    var paysA = document.forms["myForm"]["paysA"];
+    var ascenseurA = document.forms["myForm"]["ascenseurA"];  
+    var surface = document.getElementById("surface");
+
+     if (name.value == "")                                  
+    { 
+        document.getElementById('errorname').innerHTML="Veuillez entrez un nom valide!";  
+        name.focus(); 
+        return false; 
+    }else{
+        document.getElementById('errorname').innerHTML="";  
+    }
+    if (telephone.value == "")                           
+    {
+        document.getElementById('errtelephone').innerHTML="Veuillez entrez un numéro de téléphone valide!"; 
+        telephone.focus(); 
+        return false; 
+    }else{
+        document.getElementById('errormsg').innerHTML="";  
+    }
+    if (email.value == "")                                   
+    { 
+        document.getElementById('erroremail').innerHTML="Veuillez entrez une adresse mail valide!"; 
+        email.focus(); 
+        return false; 
+    }else{
+        document.getElementById('erroremail').innerHTML="";  
+    }
+   
+    if (email.value.indexOf("@", 0) < 0)                 
+    { 
+        document.getElementById('erroremail').innerHTML="Veuillez entrez une adresse mail valide!"; 
+        email.focus(); 
+        return false; 
+    } 
+   
+    if (email.value.indexOf(".", 0) < 0)                 
+    { 
+        document.getElementById('erroremail').innerHTML="Veuillez entrez une adresse mail valide!"; 
+        email.focus(); 
+        return false; 
+    } 
+
+    if (adresseD.value == "")                                  
+    { 
+        document.getElementById('erroradresseD').innerHTML="Veuillez entrez une adresse valide!";  
+        adresseD.focus(); 
+        return false; 
+    }else{
+        document.getElementById('erroradresseD').innerHTML="";  
+    }
+
+     if (casepostaleD.value == "")                                  
+    { 
+        document.getElementById('errorPostalD').innerHTML="Veuillez entrez une case postale valide!";  
+        casepostaleD.focus(); 
+        return false; 
+    }else{
+        document.getElementById('errorPostalD').innerHTML="";  
+    }
+
+    if (villeD.value == "")                                  
+    { 
+        document.getElementById('errorVilleD').innerHTML="Veuillez entrez une ville valide!";  
+        villeD.focus(); 
+        return false; 
+    }else{
+        document.getElementById('errorVilleD').innerHTML="";  
+    }
+   
+    if (paysD.value == "")                                  
+    { 
+        document.getElementById('errorpaysD').innerHTML="Veuillez entrez un pays valide!";  
+        paysD.focus(); 
+        return false; 
+    }else{
+        document.getElementById('errorpaysD').innerHTML="";  
+    }
+
+     if (adresseA.value == "")                                  
+    { 
+        document.getElementById('erroradresseA').innerHTML="Veuillez entrez une adresse valide!";  
+        adresseA.focus(); 
+        return false; 
+    }else{
+        document.getElementById('erroradresseA').innerHTML="";  
+    }
+
+      if (casepostaleA.value == "")                                  
+    { 
+        document.getElementById('errorPostalA').innerHTML="Veuillez entrez une case postale valide!";  
+        casepostaleA.focus(); 
+        return false; 
+    }else{
+        document.getElementById('errorPostalA').innerHTML="";  
+    }
+
+    if (villeA.value == "")                                  
+    { 
+        document.getElementById('errorVilleA').innerHTML="Veuillez entrez une ville valide!";  
+        villeA.focus(); 
+        return false; 
+    }else{
+        document.getElementById('errorVilleA').innerHTML="";  
+    }
+   
+    if (paysA.value == "")                                  
+    { 
+        document.getElementById('errorpaysA').innerHTML="Veuillez entrez un pays valide!";  
+        paysA.focus(); 
+        return false; 
+    }else{
+        document.getElementById('errorpaysA').innerHTML="";  
+    }
+   
+    if (message.value == "")                           
+    {
+        document.getElementById('errormsg').innerHTML="Veuillez entrez un message valide!"; 
+        message.focus(); 
+        return false; 
+    }else{
+        document.getElementById('errormsg').innerHTML="";  
+    }
+
+    if(surface.value ==""){
+        document.getElementById('messageG').innerHTML="Il faut choisir minimum un objet pour calculer le surface!";
+         return false;
+
+    }
+   
+
+    tableHtml();
+    
+   
+    html += `<hr><br>`;
+     Email.send({ 
+            Host: "mail.infomaniak.com", 
+            Username: "contact@vite-transport.ch", 
+            Password: "Test.2020/", 
+            To: ''+email.value+',contact@vite-transport.ch', 
+            From: "info@vite-transport.ch", 
+            Subject: "Calculateur Contact", 
+            Body: `        <h1 style="color:blue; margin:auto; width: 60%;">Calculateur contact</h1><br>
+                           <h2 style="color:green;">Donner du contact</h2>
+                           <p style="color:black"> Nom : `+name.value+`<br>
+                           Téléphone : `+telephone.value+`<br>
+                           Email : `+email.value+`<br>
+                           Adresse Départ :`+adresseD.value+`<br>
+                           Case postale Départ :`+casepostaleD.value+`<br>
+                           Ville Départ :`+villeD.value+`<br>
+                           Pays Départ :`+paysD.value+`<br>
+                           Ascenseur Départ : `+ascenseurD.value+`<br>
+                           Adresse arrivée :`+adresseA.value+`<br>
+                           Case postale arrivée :`+casepostaleA.value+`<br>
+                           Ville arrivée :`+villeA.value+`<br>
+                           Pays arrivée :`+paysA.value+`<br>
+                           Ascenseur arrivée : `+ascenseurA.value+`<br>
+                           Message : `+message.value +`<br>
+                           Surface (m3) : `+surface.value+`<br></p><br>
+                           <h2 style="color:green;">Liste des objets de Calculateur</h2>
+                           `+html+``, 
+
+              }) 
+            .then(function (message) { 
+             document.getElementById('messageG').innerHTML="Votre message a été envoyé avec succès!";  
+             return true;
+            });
+
+        name.value ="";
+        telephone.value ="";
+        email.value ="";
+        adresseD.value ="";
+        casepostaleD.value ="";
+        villeD.value ="";
+        paysD.value ="";
+        adresseA.value ="";
+        casepostaleA.value ="";
+        villeA.value ="";
+        paysA.value ="";
+        message.value ="";
+        surface.value ="";
+
+        var tableDelet = document.getElementById("tableSurface");
+        tableDelet.innerHTML = `<div class="tableSurface">
+                                <table class="table" id="tableSurface">
+                                 <thead class="thead-dark">
+                                    <tr>
+                                     <th scope="col">Nom</th>
+                                     <th scope="col">Nombre</th>
+                                     <th scope="col">Surface (m3) </th>
+                                     <th scope="col">Action</th>
+                                    </tr>
+                                 </thead>
+                                </table>
+                                </div>`;
+        window.location.href='#container';
+        return true;
+        
+        
+    
+    } 
+
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    let panel = this.nextElementSibling;
+    if (panel.style.display === "block") {
+      panel.style.display = "none";
+    } else {
+      panel.style.display = "block";
+    }
+  });
+}
+
+
+
+// Get the element with id="defaultOpen" and click on it
+
+</script>
+</body>
+</html>
